@@ -1,10 +1,9 @@
 scriptencoding utf-8
 " ============================================================================
-" Author: TaoBeier
-" Blog: http://moelove.info
+" Author: Matt Southwell
 " Version: v1.1.0
-" Update Time: 2016-09-25
-
+" Update Time: 2017-09-08
+" Forked from: https://github.com/tao12345666333/vim
 " ============================================================================
 " Vundle initialization
 " Avoid modify this section, unless you are very sure of what you are doing
@@ -37,10 +36,12 @@ Plugin 'gmarik/vundle'
 
 " Plugins from github repos:
 
+Plugin 'valloric/youcompleteme'
+
 " Better file browser
 Plugin 'scrooloose/nerdtree'
 " Code commenter
-Plugin 'scrooloose/nerdcommenter'
+" Plugin 'scrooloose/nerdcommenter'
 " Class/module browser
 Plugin 'majutsushi/tagbar'
 " Code and files fuzzy finder
@@ -48,7 +49,7 @@ Plugin 'kien/ctrlp.vim'
 " Extension to ctrlp, for fuzzy command finder
 Plugin 'fisadev/vim-ctrlp-cmdpalette'
 " Zen coding
-Plugin 'mattn/emmet-vim'
+" Plugin 'mattn/emmet-vim'
 " Maybe the best Git integration
 Plugin 'tpope/vim-fugitive'
 " Tab list panel
@@ -100,11 +101,12 @@ Plugin 'lilydjwg/colorizer'
 " javascript complete after install the plugin, you must cd the install
 " directory and run `npm install`, then add a .tern-project config file
 " the doc at http://ternjs.net/doc/manual.html#vim
-Plugin 'marijnh/tern_for_vim'
+"Plugin 'marijnh/tern_for_vim'
 " Golang Plugins
-Plugin 'fatih/vim-go'
+"Plugin 'fatih/vim-go'
 " JSX syntax highlight.
-Plugin 'mxw/vim-jsx'
+"Plugin 'mxw/vim-jsx'
+
 " Markdown syntastic highlight
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
@@ -162,11 +164,22 @@ set autowrite
 set autoread
 " when deal with unsaved files ask what to do
 set confirm
-" no backup files
-set nobackup
+
+" Centralize backups, swapfiles and undo history
+set backupdir=~/.vim/backups
+set directory=~/.vim/swaps
+if exists("&undodir")
+    set undodir=~/.vim/undo
+endif
+
+" Don’t create backups when editing files in certain directories
+set backupskip=/tmp/*,/private/tmp/*
+
+" Respect modeline in files
+set modeline
+set modelines=4
+
 " other settings 
-set langmenu=zh_CN.UTF-8
-set mouse=a
 set whichwrap+=<,>,h,l,[,]
 set background=dark
 set encoding=utf-8
@@ -198,8 +211,11 @@ nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 " syntax highlight on
 syntax on
 
-" show line numbers
-set nu
+" Use relative line numbers
+if exists("&relativenumber")
+    set relativenumber
+    au BufReadPost * set relativenumber
+endif
 
 " tab navigation mappings
 map tn :tabn<CR>
@@ -230,9 +246,6 @@ imap <C-J> <C-X><C-O>
 " Disabled by default because preview makes the window flicker
 set completeopt-=preview
 
-" save as sudo
-ca w!! w !sudo tee "%"
-
 " simple recursive grep
 " both recursive grep commands with internal or external (fast) grep
 command! -nargs=1 RecurGrep lvimgrep /<args>/gj ./**/*.* | lopen | set nowrap
@@ -240,6 +253,7 @@ command! -nargs=1 RecurGrepFast silent exec 'lgrep! <q-args> ./**/*.*' | lopen
 " mappings to call them
 nmap ,R :RecurGrep 
 nmap ,r :RecurGrepFast 
+
 " mappings to call them with the default word as search text
 nmap ,wR :RecurGrep <cword><CR>
 nmap ,wr :RecurGrepFast <cword><CR>
@@ -257,20 +271,14 @@ if has('gui_running')
     colorscheme wombat
 endif
 
-" when scrolling, keep cursor 3 lines away from screen border
-set scrolloff=3
+" when scrolling, keep cursor 4 lines away from screen border
+set scrolloff=4
 
 " autocompletion of files and commands behaves like zsh
 " (autocomplete menu)
 set wildmenu
 set wildmode=full
 
-" better backup, swap and undos storage
-set directory=~/.vim/dirs/tmp     " directory to place swap files in
-set backup                        " make backup files
-set backupdir=~/.vim/dirs/backups " where to put backup files
-set undofile                      " persistent undos - undo after you re-open the file
-set undodir=~/.vim/dirs/undos
 set viminfo+=n~/.vim/dirs/viminfo
 " store yankring history file there too
 let g:yankring_history_dir = '~/.vim/dirs/'
@@ -551,3 +559,8 @@ let g:vim_markdown_frontmatter=1
 " and when you open this, you can manually trigger preview
 " via the command :InstantMarkdownPreview
 let g:instant_markdown_autostart = 0
+
+set foldmethod=syntax
+set foldnestmax=5
+set foldlevel=2
+set foldminlines=3
