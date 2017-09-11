@@ -91,12 +91,6 @@ Plugin 't9md/vim-choosewin'
 Plugin 'scrooloose/syntastic'
 " Paint css colors with the real color
 Plugin 'lilydjwg/colorizer'
-" Relative numbering of lines (0 is the current line)
-" (disabled by default because is very intrusive and can't be easily toggled
-" on/off. When the plugin is present, will always activate the relative 
-" numbering every time you go to normal mode. Author refuses to add a setting 
-" to avoid that)
-" Plugin 'myusuf3/numbers.vim'
 
 " javascript complete after install the plugin, you must cd the install
 " directory and run `npm install`, then add a .tern-project config file
@@ -149,21 +143,27 @@ endif
 filetype plugin on
 filetype indent on
 
+let mapleader = ","
+
 " tabs and spaces handling
 set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-" highlight cursor line and column
+" highlight cursor line
 set cursorline
-set cursorcolumn
+
 " hidden startup messages
 set shortmess=atI
+
 " auto read and write
 set autowrite
 set autoread
 " when deal with unsaved files ask what to do
 set confirm
+
+" improve speed
+set ttyfast
 
 " Centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
@@ -228,23 +228,13 @@ imap <C-S-Right> <ESC>:tabn<CR>
 map <C-S-Left> :tabp<CR>
 imap <C-S-Left> <ESC>:tabp<CR>
 
-" navigate windows with meta+arrows
-map <M-Right> <c-w>l
-map <M-Left> <c-w>h
-map <M-Up> <c-w>k
-map <M-Down> <c-w>j
-imap <M-Right> <ESC><c-w>l
-imap <M-Left> <ESC><c-w>h
-imap <M-Up> <ESC><c-w>k
-imap <M-Down> <ESC><c-w>j
-
 " old autocomplete keyboard shortcut
 imap <C-J> <C-X><C-O>
 
 " Comment this line to enable autocompletion preview window
 " (displays documentation related to the selected completion option)
 " Disabled by default because preview makes the window flicker
-set completeopt-=preview
+" set completeopt-=preview
 
 " simple recursive grep
 " both recursive grep commands with internal or external (fast) grep
@@ -323,18 +313,18 @@ map <F2> :TaskList<CR>
 " CtrlP ------------------------------
 
 " file finder mapping
-let g:ctrlp_map = ',e'
+let g:ctrlp_map = ',f'
 " hidden some types files
 let g:ctrlp_show_hidden = 1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif           "Linux
-" tags (symbols) in current file finder mapping
-nmap ,g :CtrlPBufTag<CR>
+/ tags (symbols) in current file finder mapping
+" nmap ,g :CtrlPBufTag<CR>
 " tags (symbols) in all files finder mapping
-nmap ,G :CtrlPBufTagAll<CR>
+" nmap ,G :CtrlPBufTagAll<CR>
 " general code finder in all files mapping
 nmap ,f :CtrlPLine<CR>
 " recent files finder mapping
-nmap ,m :CtrlPMRUFiles<CR>
+" nmap ,m :CtrlPMRUFiles<CR>
 " commands finder mapping
 nmap ,c :CtrlPCmdPalette<CR>
 " to be able to call CtrlP with default search text
@@ -489,7 +479,8 @@ let g:choosewin_overlay_enable = 1
 " Airline ------------------------------
 
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'bubblegum'
+let g:airline_theme = 'solarized'
+let g:airline_solarized_bg='dark'
 "let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#left_sep = ' '
 "let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -564,3 +555,4 @@ set foldmethod=syntax
 set foldnestmax=5
 set foldlevel=2
 set foldminlines=3
+
