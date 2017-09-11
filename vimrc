@@ -317,7 +317,7 @@ let g:ctrlp_map = ',f'
 " hidden some types files
 let g:ctrlp_show_hidden = 1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif           "Linux
-" / tags (symbols) in current file finder mapping
+" tags (symbols) in current file finder mapping
 " nmap ,g :CtrlPBufTag<CR>
 " tags (symbols) in all files finder mapping
 " nmap ,G :CtrlPBufTagAll<CR>
