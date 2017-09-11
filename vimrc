@@ -95,6 +95,8 @@ Plugin 'lilydjwg/colorizer'
 " javascript complete after install the plugin, you must cd the install
 " directory and run `npm install`, then add a .tern-project config file
 " the doc at http://ternjs.net/doc/manual.html#vim
+
+Plugin 'maksimr/vim-jsbeautify'
 "Plugin 'marijnh/tern_for_vim'
 " Golang Plugins
 "Plugin 'fatih/vim-go'
